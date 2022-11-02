@@ -6,9 +6,9 @@ const store = createStore({
   state: () => {
     return {
       clients: [],
-      supplyPoints: []
+      supplyPoints: [],
+      products: null
     }
-
   },
   getters: {
     getClients: (state) => state.clients,
@@ -20,7 +20,7 @@ const store = createStore({
         const dataClients = await axios.get(
           "http://localhost:8080/clients.json"
         );
-        console.log('dataClients: ',dataClients)
+        console.log('dataClients: ',dataClients.data)
         commit("SET_CLIENTS", dataClients.data);
       } catch (error) {
         alert(error);
@@ -32,6 +32,8 @@ const store = createStore({
         const dataSupplyPoints = await axios.get(
           "http://localhost:8080/supply-points.json"
         );
+        
+        // console.log('1. dataClients: ', dataSupplyPoints)
         commit("SET_SUPPLY_POINTS", dataSupplyPoints.data);
       } catch (error) {
         alert(error);
@@ -46,6 +48,9 @@ const store = createStore({
     SET_SUPPLY_POINTS(state, data) {
       state.supplyPoints = data;
     },
+    setProducts(state, data) {
+      state.products = data;
+    }
   },
 });
 
