@@ -7,38 +7,21 @@ const store = createStore({
     return {
       clients: [],
       supplyPoints: [],
-      products: null
-    }
-  },
-  getters: {
-    getClients: (state) => state.clients,
-    getSupplyPoints: (state) => state.supplyPoints,
+      products: null,
+    };
   },
   actions: {
     async fetchClients({ commit }) {
-      try {
-        const dataClients = await axios.get(
-          "http://localhost:8080/clients.json"
-        );
-        console.log('dataClients: ',dataClients.data)
+      axios.get("http://localhost:8080/clients.json").then((dataClients) => {
+        // console.log("dataClients: ", dataClients.data);
         commit("SET_CLIENTS", dataClients.data);
-      } catch (error) {
-        alert(error);
-        console.log(error);
-      }
+      });
     },
     async fetchSupplyPoints({ commit }) {
-      try {
-        const dataSupplyPoints = await axios.get(
-          "http://localhost:8080/supply-points.json"
-        );
-        
-        // console.log('1. dataClients: ', dataSupplyPoints)
-        commit("SET_SUPPLY_POINTS", dataSupplyPoints.data);
-      } catch (error) {
-        alert(error);
-        console.log(error);
-      }
+      axios.get("http://localhost:8080/supply-points.json").then((dataSupplyPoints) => {
+          // console.log('1. dataSupplyPoints: ', dataSupplyPoints.data)
+          commit("SET_SUPPLY_POINTS", dataSupplyPoints.data);
+        });
     },
   },
   mutations: {
@@ -48,9 +31,9 @@ const store = createStore({
     SET_SUPPLY_POINTS(state, data) {
       state.supplyPoints = data;
     },
-    setProducts(state, data) {
+    SET_PRODUCT(state, data) {
       state.products = data;
-    }
+    },
   },
 });
 
